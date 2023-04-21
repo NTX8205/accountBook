@@ -1,6 +1,12 @@
 <?php
 include("database.php");
 $stmt = getUserBook();
+
+// 判斷是否有登入
+if (!isset($_SESSION['name'])) {
+    header("location: ./login.php");
+}
+
 ?>
 
 <!DOCTYPE html>
