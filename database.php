@@ -11,3 +11,20 @@
          $db->query("SET NAMES UTF8"); //資料可能有亂碼，所以需要設定成 UTF8
          return $db;
      }
+     function createAccount($name, $item, $price, $remark, $date)
+     {
+        $db = dbConnect(); //連線到資料庫
+        $sql = "INSERT INTO `book` (`name`, `item`, `price`, `remark`, `date`) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$name, $item, $price, $remark, $date]);
+     }
+
+     if(isset($_POST['add'])){
+        $name = 'john'; //假設用戶名為john
+        $item = $_POST['item']; //新增的物品名稱
+        $price = $_POST['price']; //新增物品的金額
+        $remark = $_POST['remark']; //這筆帳目的備註
+        $date = date("Y-m-d", time()); //獲取當前時間(20XX-XX-XX)
+        createAccount($name, $item, $price, $remark, $date); //執行新增帳目的function
+        header("location: homepage.php"); //跳轉記帳本頁面
+     }

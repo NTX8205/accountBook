@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="database.php" method="post">
         <input type="text" name="item" placeholder="購買物品名稱"><br>
         <input type="number" name="price" placeholder="購買物品金額"><br>
         <input type="text" name="remark" placeholder="備註"><br>
