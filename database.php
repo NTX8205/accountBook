@@ -25,7 +25,7 @@
          $db = dbConnect(); //連線到資料庫
          $sql = "SELECT * FROM `book` Where `name` = ?";
          $stmt = $db->prepare($sql);
-         $stmt->execute(['john']); //假設當前用戶名為john
+         $stmt->execute([$_SESSION['name']]); //當前登入的使用者
          return $stmt->fetchAll();
      }
 
@@ -61,9 +61,26 @@
         }
      }
 
+     function loginAccount($name, $inputPwd)
+     {
+        $db = dbConnect();
+        $sql = "SELECT * FROM `user` WHERE `name` = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$name]);
+        $result = $stmt->fetch();
+
+        if (password_verify($inputPwd, $result['password'])) {
+            $_SESSION['name'] = $name; //將使用名稱以 session 方式儲存
+            header("location: ./homepage.php"); //登入成功後跳轉首頁
+        } else {
+            //登入失敗的話返回登入畫面，並傳送 faild
+            //告訴瀏覽器登入失敗了
+            header("location: ./login.php?faild");
+        }
+     }
 
      if(isset($_POST['add'])){
-        $name = 'john'; //假設用戶名為john
+        $name = $_SESSION['name']; //當前登入的使用者
         $item = $_POST['item']; //新增的物品名稱
         $price = $_POST['price']; //新增物品的金額
         $remark = $_POST['remark']; //這筆帳目的備註
@@ -91,5 +108,11 @@
         $name = $_POST['name'];
         $password = $_POST['password'];
         registerAccount($name, $password); //執行註冊帳號的function
+     }
+    
+     if (isset($_POST['login'])) {
+        $name = $_POST['name'];
+        $password = $_POST['password'];
+        loginAccount($name, $password); //執行登入帳號的function
      }
     
