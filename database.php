@@ -1,4 +1,5 @@
 <?php
+     session_start();
      function dbConnect()
      {
          $db_type = 'mysql'; //資料庫類型
