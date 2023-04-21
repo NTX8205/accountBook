@@ -7,6 +7,12 @@ if (!isset($_SESSION['name'])) {
     header("location: ./login.php");
 }
 
+// 判斷是否有登出
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("location: ./login.php");
+}
+
 ?>
 
 <!DOCTYPE html>
