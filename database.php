@@ -19,6 +19,15 @@
         $stmt->execute([$name, $item, $price, $remark, $date]);
      }
 
+     function getUserBook()
+     {
+         $db = dbConnect(); //連線到資料庫
+         $sql = "SELECT * FROM `book` Where `name` = ?";
+         $stmt = $db->prepare($sql);
+         $stmt->execute(['john']); //假設當前用戶名為john
+         return $stmt->fetchAll();
+     }
+
      if(isset($_POST['add'])){
         $name = 'john'; //假設用戶名為john
         $item = $_POST['item']; //新增的物品名稱

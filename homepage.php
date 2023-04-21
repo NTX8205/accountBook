@@ -1,3 +1,8 @@
+<?php
+include("database.php");
+$stmt = getUserBook();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,33 +36,35 @@
                     <th colspan="2">購買物品金額</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2023-05-05</td>
-                        <td>鉛筆</td>
-                        <td>20</td>
-                        <td>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#remark1">查看備註</button>
-                            <button id="1" class="btn btn-warning mx-sm-1"
-                                style="float: right; white-space: nowrap;">修改</button>
-                            <form class="edit_form" method="POST" onsubmit="return myform();">
-                                <input type="hidden" name="id" value="">
-                                <input type="submit" name="del" class="btn btn-danger mt-sm-0 mt-1"
-                                    style="float: right; white-space: nowrap;" value="刪除"></input>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr id="1" class="edit_panel" status="hide">
-                        <td colspan="5">
-                            <form action="" method="POST">
-                                <input type="hidden" name="id" value="">
-                                <input type="text" name="item" placeholder="購買物品名稱" value="鉛筆"><br>
-                                <input type="number" name="price" placeholder="購買物品金額" value="20"><br>
-                                <input type="text" name="remark" placeholder="備註" value="美術課要用的">
-                                <input type="submit" name="edit" class="btn btn-warning" value="確認修改">
-                            </form>
-                        </td>
-                    </tr>
+                    <?php foreach ($stmt as $row) { ?>
+                        <tr>
+                            <td><?= $row['date'] ?></td>
+                            <td><?= $row['item'] ?></td>
+                            <td><?= $row['price'] ?></td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#remark<?= $row['id'] ?>">查看備註</button>
+                                <button id="<?= $row['id'] ?>" class="btn btn-warning mx-sm-1"
+                                    style="float: right; white-space: nowrap;">修改</button>
+                                <form class="edit_form" method="POST">
+                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                    <input type="submit" name="del" class="btn btn-danger mt-sm-0 mt-1"
+                                        style="float: right; white-space: nowrap;" value="刪除"></input>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr id="<?= $row['id'] ?>" class="edit_panel" status="hide">
+                            <td colspan="5">
+                                <form action="" method="POST">
+                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                    <input type="text" name="item" placeholder="購買物品名稱" value="<?= $row['item'] ?>"><br>
+                                    <input type="number" name="price" placeholder="購買物品金額" value="<?= $row['price'] ?>"><br>
+                                    <input type="text" name="remark" placeholder="備註" value="<?= $row['remark'] ?>">
+                                    <input type="submit" name="edit" class="btn btn-warning" value="確認修改">
+                                </form>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -65,22 +72,25 @@
         <a class="add" href="./add.php">新增</a>
 
         <!-- 以下為備註的彈出視窗 -->
-        <div class="modal fade" id="remark1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">備註</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        美術課要用的
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <?php foreach ($stmt as $row) { ?>
+            <div class="modal fade" id="remark<?= $row['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">備註</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <?= $row['remark'] ?>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
 
 </body>
