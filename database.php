@@ -36,6 +36,14 @@
         $stmt->execute([$item, $price, $remark, $id]);
      }
 
+     function deleteAccount($id)
+     {
+        $db = dbConnect();
+        $sql = "DELETE FROM book WHERE `id` = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$id]);
+     }
+
 
      if(isset($_POST['add'])){
         $name = 'john'; //假設用戶名為john
@@ -55,3 +63,10 @@
         editAccount($id, $item, $price, $remark); //執行修改帳目的function
         header("location: homepage.php"); //跳轉記帳本頁面
      }
+
+     if (isset($_POST['del'])) {
+        $id = $_POST['id']; //要刪除的id
+        deleteAccount($id); //執行刪除帳目的function
+        header("location: homepage.php"); //跳轉記帳本頁面
+     }
+    

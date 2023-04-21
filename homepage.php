@@ -46,7 +46,7 @@ $stmt = getUserBook();
                                     data-bs-target="#remark<?= $row['id'] ?>">查看備註</button>
                                 <button id="<?= $row['id'] ?>" class="btn btn-warning mx-sm-1"
                                     style="float: right; white-space: nowrap;">修改</button>
-                                <form class="edit_form" method="POST">
+                                <form class="edit_form" method="POST" onsubmit="return myform()">
                                     <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                     <input type="submit" name="del" class="btn btn-danger mt-sm-0 mt-1"
                                         style="float: right; white-space: nowrap;" value="刪除"></input>
