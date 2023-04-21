@@ -45,6 +45,22 @@
         $stmt->execute([$id]);
      }
 
+     function registerAccount($name, $password)
+     {
+        $db = dbConnect();
+        $sql = "INSERT INTO `user`(`name`, `password`) VALUES (?,?)";
+        $password = password_hash($password, PASSWORD_BCRYPT); //將密碼進行加密
+        $stmt = $db->prepare($sql);
+        if($stmt->execute([$name, $password])) {
+            $_SESSION['name'] = $name; //將使用名稱以 session 方式儲存
+            header("location: ./homepage.php"); //註冊成功後跳轉首頁
+        }else{
+            //註冊失敗的話返回註冊畫面，並傳送 faild
+            //告訴瀏覽器註冊失敗了
+            header("location: ./register.php?faild");
+        }
+     }
+
 
      if(isset($_POST['add'])){
         $name = 'john'; //假設用戶名為john
@@ -69,5 +85,11 @@
         $id = $_POST['id']; //要刪除的id
         deleteAccount($id); //執行刪除帳目的function
         header("location: homepage.php"); //跳轉記帳本頁面
+     }
+    
+     if (isset($_POST['register'])) {
+        $name = $_POST['name'];
+        $password = $_POST['password'];
+        registerAccount($name, $password); //執行註冊帳號的function
      }
     

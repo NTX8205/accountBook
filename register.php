@@ -29,6 +29,9 @@
                     <label for="password"><i class='bx bx-lock-alt'></i></label>
                     <input type="password" name="password" placeholder="密碼" required>
                 </div>
+                <?php if (isset($_GET['faild'])): ?>
+                    <span>註冊失敗</span>
+                <?php endif ?>
                 <input class="btn btn-secondary" name="register" type="submit" value="立即註冊">
             </form>
             <a style="width: fit-content;" href="./login.php">已有帳號，登入</a>
