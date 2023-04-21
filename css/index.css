@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+.back {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -999;
+    background-color: #f8fbff;
+    overflow: hidden;
+}
+
+.back img {
+    opacity: 0.08;
+    height: 100vh;
+}
+
+h1 {
+    display: inline-block;
+}
+
+.contain {
+    margin-top: 100px;
+}
+
+.logout {
+    float: right;
+}
+
+table {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Table Head */
+#account-table thead th {
+    background-color: rgb(81, 130, 187);
+    color: #fff;
+    border-bottom-width: 0;
+}
+
+/* Column Style */
+#account-table td {
+    color: #000;
+    word-break: break-all;
+}
+
+/* Heading and Column Style */
+#account-table tr, #account-table th {
+    border: 1px solid rgb(81, 130, 187);
+}
+
+/* Padding and font style */
+#account-table td, #account-table th {
+    padding: 12px 10px;
+    font-size: 1.3em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+#account-table .edit_panel {
+    display: none;
+    width: 100%;
+}
+
+#account-table .edit_panel form input[type="number"],
+#account-table .edit_panel form input[type="text"] {
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    margin: 5px 0;
+}
+
+#account-table .edit_panel form input::placeholder {
+    opacity: 0.5;
+    font-size: 0.9em;
+}
+
+.edit_form{
+    display: inline;
+}
+
+.sidebar-show {
+    animation: sidebarshow 0.5s;
+    height: 200px;
+}
+
+.sidebar-hide {
+    animation: sidebarhide 0.5s;
+    height: 0;
+}
+
+.add {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 768px){
+    #account-table td, #account-table th {
+        font-size: 1.1em;
+    }
+}
